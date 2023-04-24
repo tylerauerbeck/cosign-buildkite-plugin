@@ -58,15 +58,8 @@ cosign_keyless() {
 
     rm out.sig || true
 
-    cosign sign \
-        -y \
-        # --fulcio-url="${fulcio_url}" \
-        # --rekor-url="${rekor_url}" \
-        # --oidc-issuer="${oidc_issuer}" \
-        # --oidc-provider="${oidc_provider}" \
-        --output-signature=out.sig \
-        "${image}"
-    
+    cosign sign -y --output-signature=out.sig "${image}"
+            
     status=$?
     if [[ $status -ne 0 ]]; then
         fail_with_message "cosign" "Failed to sign image"
