@@ -52,14 +52,21 @@ cosign_keyless() {
     local fulcio_url=${BUILDKITE_PLUGIN_COSIGN_KEYLESS_CONFIG_FULCIO_URL:-"https://fulcio.sigstore.dev"}
     local rekor_url=${BUILDKITE_PLUGIN_COSIG_KEYLESS_CONFIGN_REKOR_URL:-"https://rekor.sigstore.dev"}
     local oidc_issuer=${BUILDKITE_PLUGIN_COSIG_KEYLESS_CONFIGN_OIDC_ISSUER:-"https://oauth2.sigstore.dev/auth"}
-    local oidc_provider=${BUILDKITE_PLUGIN_COSIG_KEYLESS_CONFIGN_OIDC_PROVIDER:-"buildkite"}
+    local oidc_provider=${BUILDKITE_PLUGIN_COSIG_KEYLESS_CONFIGN_OIDC_PROVIDER:-"buildkite-agent"}
     
     echo "--- :key: Cosign keyless signing"
 
     rm out.sig || true
 
-    cosign sign -y --output-signature=out.sig "${image}"
-            
+    cosign sign \
+        -y \
+        --fulcio-url="${fulcio_url}" \
+        --rekor-url="${rekor_url}" \
+        --oidc-issuer="${oidc_issuer}" \
+        --oidc-provider="${oidc_provider}" \
+        --output-signature=out.sig \
+        "${image}"
+    
     status=$?
     if [[ $status -ne 0 ]]; then
         fail_with_message "cosign" "Failed to sign image"
