@@ -59,7 +59,7 @@ cosign_keyless() {
     rm out.sig || true
 
     cosign sign \
-        -f -y \
+        -y \
         --fulcio-url="${fulcio_url}" \
         --rekor-url="${rekor_url}" \
         --oidc-issuer="${oidc_issuer}" \
