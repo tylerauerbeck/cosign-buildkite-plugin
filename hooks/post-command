@@ -56,9 +56,9 @@ cosign_keyless() {
     
     echo "--- :key: Cosign keyless signing"
 
-    #rm out.sig || true
+    rm out.sig || true
 
-    COSIGN EXPERIMENTAL=1 cosign sign \
+    cosign sign \
         -f -y \
         --fulcio-url="${fulcio_url}" \
         --rekor-url="${rekor_url}" \
