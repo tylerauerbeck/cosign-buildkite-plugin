@@ -63,7 +63,7 @@ cosign_keyless() {
         --fulcio-url="${fulcio_url}" \
         --rekor-url="${rekor_url}" \
         --oidc-issuer="${oidc_issuer}" \
-        --oidc-provider="${oidc_provider}" \
+        # --oidc-provider="${oidc_provider}" \
         --output-signature=out.sig \
         "${image}"
     
